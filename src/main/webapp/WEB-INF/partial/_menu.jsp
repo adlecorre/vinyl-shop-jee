@@ -19,6 +19,13 @@
                data-bs-toggle="dropdown" aria-expanded="false">
               ${sessionScope.utilisateur.prenom} ${sessionScope.utilisateur.nom}
             </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+              <li><a class="dropdown-item" href="${pageContext.request.contextPath}/annonce">Mes annonces</a></li>
+              <li><a class="dropdown-item" href="${pageContext.request.contextPath}/favori">Mes favoris</a></li>
+              <li><a class="dropdown-item" href="${pageContext.request.contextPath}/profil">Mon profil</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger" href="${pageContext.request.contextPath}/deconnexion">Déconnexion</a></li>
+            </ul>
           </li>
         </c:when>
         <c:otherwise>

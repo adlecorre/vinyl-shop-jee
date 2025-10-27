@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.eclipse.config.MySqlConnection;
+
 import utilitaires.ConnexionBD;
 import utilitaires.DAO;
 
@@ -20,6 +22,10 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
         this.connection = connection;
     }
     
+	public UtilisateurDAO() {
+		// TODO Auto-generated constructor stub
+	}
+
 	private void addValues(PreparedStatement ps, Utilisateur object) throws Exception {
 		// Attributs obligatoires
 		ps.setString(1, object.getNom());
@@ -82,26 +88,41 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 	}
 	
 	public Utilisateur findByEmailEtMdp(String email, String mdp) {
-        String sql = "SELECT * FROM Utilisateur WHERE email_utilisateur = ? AND mot_de_passe = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, email);
-            stmt.setString(2, mdp);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                Utilisateur u = new Utilisateur();
-                u.setId(rs.getInt("id_utilisateur"));
-                u.setNom(rs.getString("nom_utilisateur"));
-                u.setPrenom(rs.getString("prenom_utilisateur"));
-                u.setEmail(rs.getString("email_utilisateur"));
-                u.setMotDePasse(rs.getString("mot_de_passe"));
-                u.setRole(Role.fromString(rs.getString("role_utilisateur")));
-                return u;
-            }
-        } catch (SQLException e) {
-            System.err.println("❌ Erreur lors de la recherche de l’utilisateur : " + e.getMessage());
-        }
-        return null;
-    }
+	    String sql = "SELECT * FROM utilisateur WHERE email_utilisateur = ? AND mot_de_passe = ?";
+
+	    try (Connection connection = MySqlConnection.getConnection();
+	         PreparedStatement ps = connection.prepareStatement(sql)) {
+
+	        ps.setString(1, email);
+	        ps.setString(2, mdp);
+
+	        try (ResultSet rs = ps.executeQuery()) {
+	            if (rs.next()) {
+	                Utilisateur u = new Utilisateur();
+	                u.setId(rs.getInt("id_utilisateur"));
+	                u.setNom(rs.getString("nom_utilisateur"));
+	                u.setPrenom(rs.getString("prenom_utilisateur"));
+	                u.setMotDePasse(rs.getString("mot_de_passe"));
+	                u.setEmail(rs.getString("email_utilisateur"));
+	                u.setAdresse(rs.getString("adresse_utilisateur"));
+	                u.setNumTel(rs.getString("tel_utilisateur"));
+	                u.setRole(Role.fromString(rs.getString("role_utilisateur")));
+
+	                java.sql.Date dateSql = rs.getDate("date_naissance");
+	                if (dateSql != null) {
+	                    u.setDateNaissance(new java.util.Date(dateSql.getTime()));
+	                }
+	                return u;
+	            }
+	        }
+
+	    } catch (SQLException e) {
+	        System.err.println("❌ Erreur lors de la recherche utilisateur : " + e.getMessage());
+	    }
+
+	    return null;
+	}
+
 
 	@Override
 	public List<Utilisateur> findAll() {
@@ -194,5 +215,6 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 		}
 		return object;
 	}
+
 
 }
