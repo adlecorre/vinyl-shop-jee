@@ -44,7 +44,7 @@ public class ConnexionServlet extends HttpServlet {
         
         if(utilisateur != null) {
         	request.getSession().setAttribute("utilisateur", utilisateur);
-        	response.sendRedirect(request.getContextPath()+"/vinyle");
+        	response.sendRedirect(request.getContextPath()+"/catalogue");
         } else {
         	request.setAttribute("erreur", "Email ou mot de passe incorrect.");
             request.getRequestDispatcher("/WEB-INF/connexion.jsp").forward(request, response);

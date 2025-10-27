@@ -6,7 +6,7 @@
     <!-- Menu gauche -->
     <ul id="menu" class="navbar-nav d-flex flex-row mb-0">
       <li class="nav-item me-3">
-        <a class="nav-link" href="${pageContext.request.contextPath}/accueil">Accueil</a>
+        <a class="nav-link" href="${pageContext.request.contextPath}/catalogue">Accueil</a>
       </li>
     </ul>
 
