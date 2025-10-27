@@ -68,7 +68,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 	public Utilisateur findById(int id) {
 		Utilisateur utilisateur = null;
 		try {
-			PreparedStatement ps = ConnexionBD.getConnection().prepareStatement(
+			PreparedStatement ps = MySqlConnection.getConnection().prepareStatement(
 					"SELECT id_utilisateur, nom_utilisateur, prenom_utilisateur, email_utilisateur, role_utilisateur FROM utilisateur WHERE id_utilisateur  = ?");
 			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
@@ -128,7 +128,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 	public List<Utilisateur> findAll() {
 		List<Utilisateur> utilisateurs = new ArrayList<>();
 		try {
-			PreparedStatement ps = ConnexionBD.getConnection().prepareStatement("SELECT * FROM utilisateur");
+			PreparedStatement ps = MySqlConnection.getConnection().prepareStatement("SELECT * FROM utilisateur");
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				int id = rs.getInt("id_utilisateur");
@@ -155,7 +155,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 		if (!(object instanceof Utilisateur)) throw new IllegalArgumentException("L'objet n'est pas un Utilisateur.");
 		try {
 			// Création de l'utilisateur dans la table
-			PreparedStatement ps = ConnexionBD.getConnection().prepareStatement(
+			PreparedStatement ps = MySqlConnection.getConnection().prepareStatement(
 					"INSERT INTO utilisateur(nom_utilisateur, prenom_utilisateur, mot_de_passe, date_naissance, email_utilisateur, adresse_utilisateur, tel_utilisateur, role_utilisateur) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
 					 Statement.RETURN_GENERATED_KEYS);
 			
@@ -179,7 +179,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 	public Utilisateur delete(Utilisateur object) {
 		if (!(object instanceof Utilisateur)) throw new IllegalArgumentException("L'objet n'est pas un Utilisateur.");
 		try {
-			PreparedStatement ps = ConnexionBD.getConnection().prepareStatement("DELETE FROM utilisateur WHERE id_utilisateur = ?");
+			PreparedStatement ps = MySqlConnection.getConnection().prepareStatement("DELETE FROM utilisateur WHERE id_utilisateur = ?");
 			ps.setInt(1, object.getId());
 			ps.executeUpdate();
 			return object;
@@ -194,7 +194,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 	public Utilisateur update(Utilisateur object) {
 		if (!(object instanceof Utilisateur)) throw new IllegalArgumentException("L'objet n'est pas un Utilisateur.");
 		try {
-			PreparedStatement ps = ConnexionBD.getConnection().prepareStatement(
+			PreparedStatement ps = MySqlConnection.getConnection().prepareStatement(
 					"UPDATE utilisateur SET "
 					+ "nom_utilisateur = ?, "
 					+ "prenom_utilisateur = ?, "
