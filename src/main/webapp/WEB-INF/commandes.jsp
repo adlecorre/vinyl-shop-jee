@@ -20,9 +20,10 @@
 		<table class="table table-striped table-bordered">
 			<thead class="table-dark">
 				<tr>
-					<th>ID</th>
+					<th>Numéro de commande</th>
 					<th>Statut</th>
 					<th>Date de commande</th>
+					<th>Détails de la commande</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -31,6 +32,14 @@
 						<td>${c.idCommande}</td>
 						<td>${c.statutCommande}</td>
 						<td>${c.dateCommande}</td>
+						<td>
+				            <ul>
+							    <c:forEach var="vinyle" items="${c.vinyles}">
+							        <li>${vinyle.key.titre} - Quantité : ${vinyle.value}</li>
+							    </c:forEach>
+							</ul>
+
+				        </td>
 					</tr>
 				</c:forEach>
 			</tbody>

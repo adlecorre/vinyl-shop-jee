@@ -1,14 +1,19 @@
 package GestionCommande;
 
 import java.sql.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import GestionUtilisateurs.Utilisateur;
+
+import GestionVinyle.Vinyle;
 
 public class Commande {
 	private int idCommande;
 	private StatutCommande statutCommande;
 	private Date dateCommande;
 	private Utilisateur utilisateur;
+	private Map<Vinyle, Integer> vinyles = new HashMap<>();
 
 	public Commande(int idCommande, StatutCommande statutCommande) {
 		super();
@@ -59,6 +64,15 @@ public class Commande {
 
 	public void setUtilisateur(Utilisateur utilisateur) {
 		this.utilisateur = utilisateur;
+	}
+	
+
+	public Map<Vinyle, Integer> getVinyles() {
+		return vinyles;
+	}
+
+	public void setVinyles(Map<Vinyle, Integer> vinyles) {
+		this.vinyles = vinyles;
 	}
 
 	@Override

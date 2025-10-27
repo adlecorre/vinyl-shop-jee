@@ -41,7 +41,7 @@ public class CommandeDao extends DAO<Commande> {
 				UtilisateurDAO utilisateurDao = new UtilisateurDAO();
 				int idUtilisateur = rs.getInt("id_utilisateur");
 				Date dateCommande = rs.getDate("date_commande");
-				StatutCommande statutCommande = StatutCommande.valueOf(rs.getString("prenom_utilisateur"));
+				StatutCommande statutCommande = StatutCommande.valueOf(rs.getString("statut_commande"));
 				Utilisateur utilisateur = utilisateurDao.findById(idUtilisateur);
 				commande = new Commande(id, statutCommande, dateCommande, utilisateur);
 			}
@@ -66,7 +66,16 @@ public class CommandeDao extends DAO<Commande> {
 				int idCommande = rs.getInt("id_commande");
 				Date dateCommande = rs.getDate("date_commande");
 				StatutCommande statutCommande = StatutCommande.valueOf(rs.getString("statut_commande"));
-				commandes.add(new Commande(idCommande, statutCommande, dateCommande, utilisateur));
+				Commande commande = new Commande(idCommande, statutCommande, dateCommande, utilisateur);
+				
+				// Charger et remplir les lignes de commande
+	            LigneDeCommandeDAO ligneDao = new LigneDeCommandeDAO();
+	            var lignes = ligneDao.findByCommandeId(idCommande);
+	            for (LigneDeCommande l : lignes) {
+	                commande.getVinyles().put(l.getVinyle(), l.getQuantite());
+	            }
+
+	            commandes.add(commande);
 			}
 		} catch (Exception e) {
 			System.out.println("Problème de récupération des commandes");
