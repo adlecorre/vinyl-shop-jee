@@ -27,42 +27,46 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 	}
 
 	private void addValues(PreparedStatement ps, Utilisateur object) throws Exception {
-		// Attributs obligatoires
-		ps.setString(1, object.getNom());
-		ps.setString(2,  object.getPrenom());
-		ps.setString(3, object.getMotDePasse());
-		ps.setString(5, object.getEmail());
-		
-		// Marche seulement pour les updates
-		if (object.getId() != 0) {
-			ps.setInt(9, object.getId());
-		}
-					
-		// Attributs optionnels
-		if (object.getDateNaissance() != null) {
-			ps.setDate(4, (java.sql.Date) object.getDateNaissance());
-		}else {
-			ps.setNull(4, Types.DATE);
-		}
-					
-		if (object.getAdresse() != null) {
-			ps.setString(6, object.getAdresse());
-		}else {
-			ps.setNull(6, Types.VARCHAR);
-		}
-					
-		if (object.getNumTel() != null) {
-			ps.setString(7, object.getNumTel());
-		}else {
-			ps.setNull(7, Types.VARCHAR);
-		}
-					
-		if (object.getRole() != null) {
-			ps.setString(8, object.getRole().name());
-		}else {
-			ps.setString(8, "CLIENT");
-		}
+	    // Attributs obligatoires
+	    ps.setString(1, object.getNom());
+	    ps.setString(2, object.getPrenom());
+	    ps.setString(3, object.getMotDePasse());
+
+	    // 4 - date de naissance
+	    if (object.getDateNaissance() != null) {
+	        ps.setDate(4, new java.sql.Date(object.getDateNaissance().getTime()));
+	    } else {
+	        ps.setNull(4, Types.DATE);
+	    }
+
+	    // 5 - email
+	    ps.setString(5, object.getEmail());
+
+	    // Marche seulement pour les updates
+	    if (object.getId() != 0) {
+	        ps.setInt(9, object.getId());
+	    }
+
+	    // Attributs optionnels
+	    if (object.getAdresse() != null && !object.getAdresse().isEmpty()) {
+	        ps.setString(6, object.getAdresse());
+	    } else {
+	        ps.setNull(6, Types.VARCHAR);
+	    }
+
+	    if (object.getNumTel() != null && !object.getNumTel().isEmpty()) {
+	        ps.setString(7, object.getNumTel());
+	    } else {
+	        ps.setNull(7, Types.VARCHAR);
+	    }
+
+	    if (object.getRole() != null) {
+	        ps.setString(8, object.getRole().name());
+	    } else {
+	        ps.setString(8, "CLIENT");
+	    }
 	}
+
 
 	@Override
 	public Utilisateur findById(int id) {

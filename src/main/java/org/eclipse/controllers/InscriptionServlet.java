@@ -25,7 +25,7 @@ public class InscriptionServlet extends HttpServlet {
 	
 	@Override
 	public void init() throws ServletException {
-		utilisateurDao = new UtilisateurDAO(ConnexionBD.getConnection());
+		utilisateurDao = new UtilisateurDAO();
 		inscriptionService = new InscriptionService();
 	}
 
@@ -48,10 +48,13 @@ public class InscriptionServlet extends HttpServlet {
 		var emailValide = inscriptionService.verificationEmail(email);
 		
 		if (dateNaissanceString != null && !dateNaissanceString.isEmpty()) {
-		    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 		    try {
-		        dateNaissance = sdf.parse(dateNaissanceString);
-		    } catch (Exception e) {
+		        // Formulaire <input type="date"> envoie yyyy-MM-dd
+		        java.sql.Date sqlDate = java.sql.Date.valueOf(dateNaissanceString);
+		        // On peut garder java.util.Date pour l'objet Utilisateur
+		        dateNaissance = new Date(sqlDate.getTime());
+		        System.out.println("✅ date SQL: " + sqlDate);
+		    } catch (IllegalArgumentException e) {
 		        e.printStackTrace();
 		    }
 		}
@@ -68,9 +71,9 @@ public class InscriptionServlet extends HttpServlet {
 		
 		if (nomValide && prenomValide && emailValide) {
 			utilisateurDao.create(new Utilisateur(nom, prenom, dateNaissance, email, adresse, telephone, Role.CLIENT, mdp));
-			//response.sendRedirect(request.getContextPath() + "/connexion");
+			response.sendRedirect(request.getContextPath() + "/connexion");
 		} else {
-			request.setAttribute("utilisateurSaisi", new Utilisateur(nom, prenom, email, mdp));
+			request.setAttribute("utilisateurSaisi", new Utilisateur(nom, prenom, dateNaissance, email, adresse, telephone, Role.CLIENT, mdp));
 		}
 	}
 
