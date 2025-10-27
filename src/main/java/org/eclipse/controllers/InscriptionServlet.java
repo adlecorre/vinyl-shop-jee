@@ -49,11 +49,8 @@ public class InscriptionServlet extends HttpServlet {
 		
 		if (dateNaissanceString != null && !dateNaissanceString.isEmpty()) {
 		    try {
-		        // Formulaire <input type="date"> envoie yyyy-MM-dd
 		        java.sql.Date sqlDate = java.sql.Date.valueOf(dateNaissanceString);
-		        // On peut garder java.util.Date pour l'objet Utilisateur
 		        dateNaissance = new Date(sqlDate.getTime());
-		        System.out.println("✅ date SQL: " + sqlDate);
 		    } catch (IllegalArgumentException e) {
 		        e.printStackTrace();
 		    }
@@ -69,11 +66,29 @@ public class InscriptionServlet extends HttpServlet {
 			request.setAttribute("erreurEmail", "L'email doit contenir un @");
 		}
 		
-		if (nomValide && prenomValide && emailValide) {
+		// Vérification email et numéro de tels uniques
+		boolean emailEtTelepehoneUniques = true;
+		var utilisateurs = utilisateurDao.findAll();
+		for (Utilisateur utilisateur : utilisateurs) {
+			if(email.equals(utilisateur.getEmail())) {
+				request.setAttribute("erreurEmail", "Un compte existe déjà avec cette adresse mail.");
+				emailEtTelepehoneUniques = false;
+			}
+			
+			if(telephone != null && !telephone.isEmpty()) {
+				if (telephone.equals(utilisateur.getNumTel())) {
+					request.setAttribute("erreurNumTel", "Un compte existe déjà avec ce numéro de téléphone.");
+					emailEtTelepehoneUniques = false;
+				}
+			}
+		}
+		
+		if (nomValide && prenomValide && emailValide && emailEtTelepehoneUniques) {
 			utilisateurDao.create(new Utilisateur(nom, prenom, dateNaissance, email, adresse, telephone, Role.CLIENT, mdp));
 			response.sendRedirect(request.getContextPath() + "/connexion");
 		} else {
 			request.setAttribute("utilisateurSaisi", new Utilisateur(nom, prenom, dateNaissance, email, adresse, telephone, Role.CLIENT, mdp));
+			request.getRequestDispatcher("WEB-INF/inscription.jsp").forward(request, response);
 		}
 	}
 

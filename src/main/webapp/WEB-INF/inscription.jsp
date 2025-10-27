@@ -20,17 +20,17 @@
 	<form method="post" action="${pageContext.request.contextPath}/inscription">
             <div class="mb-3">
             	<label for="nom" class="form-label">Nom</label>
-            	<input type="text" class="form-control" id="nom" name="nom" autocomplete="off" placeholder="Entrez votre nom" required>
+            	<input type="text" class="form-control" id="nom" name="nom" autocomplete="off" placeholder="Entrez votre nom" value="${utilisateurSaisi.nom}"required>
 		    </div>
 		    
 		    <div class="mb-3">
             	<label for="prenom" class="form-label">Prénom</label>
-            	<input type="text" class="form-control" id="prenom" name="prenom" autocomplete="off" placeholder="Entrez votre prénom" required>
+            	<input type="text" class="form-control" id="prenom" name="prenom" autocomplete="off" placeholder="Entrez votre prénom"  value="${utilisateurSaisi.prenom}" required>
 		    </div>
 		    
 		    <div class="mb-3">
             	<label for="email" class="form-label">Adresse mail</label>
-            	<input type="email" class="form-control" id="email" name="email" autocomplete="off" placeholder="exemple@domaine.com" required>
+            	<input type="email" class="form-control" id="email" name="email" autocomplete="off" placeholder="exemple@domaine.com" value="${utilisateurSaisi.email}" required>
 		    </div>
 		    
 		    <div class="mb-3">
@@ -40,17 +40,17 @@
             
             <div class="mb-3">
                 <label for="dateNaissance" class="form-label">Date de naissance <i>(optionnel)</i></label>
-      			<input type="date" class="form-control" id="dateNaissance" name="dateNaissance" autocomplete="off">
+      			<input type="date" class="form-control" id="dateNaissance" name="dateNaissance" autocomplete="off" value="${utilisateurSaisi.dateNaissance}">
             </div>
             
             <div class="mb-3">
                 <label for="adresse" class="form-label">Adresse <i>(optionnel)</i></label>
-      			<input type="text" class="form-control" id="adresse" name="adresse" autocomplete="off" placeholder="Rue, ville, code postal">
+      			<input type="text" class="form-control" id="adresse" name="adresse" autocomplete="off" placeholder="Rue, ville, code postal" value="${utilisateurSaisi.adresse}">
             </div>
             
             <div class="mb-3">
                 <label for="telephone" class="form-label">Téléphone <i>(optionnel)</i></label>
-      			<input type="tel" class="form-control" id="telephone" name="telephone" autocomplete="off" pattern="[0-9]{10}" maxlength="10" placeholder="Ex : 0733345678">
+      			<input type="tel" class="form-control" id="telephone" name="telephone" autocomplete="off" pattern="[0-9]{10}" maxlength="10" placeholder="Ex : 0733345678" value="${utilisateurSaisi.numTel}">
             </div>
 
 
@@ -63,6 +63,14 @@
         </p>
         <c:if test="${not empty erreur}">
             <div class="alert alert-danger text-center mt-3">${erreur}</div>
+        </c:if>
+        
+        <c:if test="${not empty erreurEmail}">
+            <div class="alert alert-danger text-center mt-3">${erreurEmail}</div>
+        </c:if>
+        
+        <c:if test="${not empty erreurNumTel}">
+            <div class="alert alert-danger text-center mt-3">${erreurNumTel}</div>
         </c:if>
     </div>
 </div>
