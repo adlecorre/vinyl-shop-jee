@@ -21,8 +21,6 @@ public class LigneDeCommande {
 		this.quantite = quantite;
 	}
 	
-	
-
 	public int getIdLigne() {
 		return idLigne;
 	}
