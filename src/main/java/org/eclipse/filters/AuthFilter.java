@@ -31,6 +31,7 @@ public class AuthFilter extends HttpFilter implements Filter {
 		if ((chemin.contains("catalogue") 
 				|| chemin.contains("profil")
 				|| chemin.contains("panier")
+				|| chemin.contains("commandes")
 				|| chemin.contains("utilisateur")) && utilisateur == null) {
 			res.sendRedirect(req.getContextPath() + "/connexion");
 

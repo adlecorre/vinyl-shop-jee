@@ -24,6 +24,10 @@ public class VinyleDAO extends DAO<Vinyle> {
 		this.connection = connection;
 	}
 
+	public VinyleDAO() {
+		// TODO Auto-generated constructor stub
+	}
+
 	private void addValues(PreparedStatement ps, Vinyle object) throws Exception {
 		// Attributs obligatoires
 		ps.setString(1, object.getTitre());
