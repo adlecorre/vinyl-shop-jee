@@ -1,53 +1,73 @@
 package GestionCommande;
 
-import java.time.LocalDate;
+import java.sql.Date;
+
+import GestionUtilisateurs.Utilisateur;
 
 public class Commande {
-	private int id_commande;
-	private StatutCommande statut_commande;
-	private LocalDate date_commande;
+	private int idCommande;
+	private StatutCommande statutCommande;
+	private Date dateCommande;
+	private Utilisateur utilisateur;
 
-	public Commande(int id_commande, StatutCommande statut_commande) {
+	public Commande(int idCommande, StatutCommande statutCommande) {
 		super();
-		this.id_commande = id_commande;
-		this.statut_commande = statut_commande;
+		this.idCommande = idCommande;
+		this.statutCommande = statutCommande;
 	}
-
-	public Commande(LocalDate date_commande) {
+	
+	public Commande(int idCommande, StatutCommande statutCommande, Date dateCommande, Utilisateur utilisateur) {
 		super();
-		this.date_commande = date_commande;
+		this.idCommande = idCommande;
+		this.statutCommande = statutCommande;
+		this.utilisateur = utilisateur;
 	}
 
-	public int getId_commande() {
-		return id_commande;
+	public Commande(Date dateCommande) {
+		super();
+		this.dateCommande = dateCommande;
 	}
 
-	public void setId_commande(int id_commande) {
-		this.id_commande = id_commande;
+	public int getIdCommande() {
+		return idCommande;
 	}
 
-	public StatutCommande getStatut_commande() {
-		return statut_commande;
+	public void setIdCommande(int idCommande) {
+		this.idCommande = idCommande;
 	}
 
-	public void setStatut_commande(StatutCommande statut_commande) {
-		this.statut_commande = statut_commande;
+	public StatutCommande getStatutCommande() {
+		return statutCommande;
+	}
+
+	public void setStatutCommande(StatutCommande statutCommande) {
+		this.statutCommande = statutCommande;
 	}
 
 	
-	public LocalDate getDate_commande() {
-		return date_commande;
+	public Date getDateCommande() {
+		return dateCommande;
 	}
 
-	public void setDate_commande(LocalDate date_commande) {
-		this.date_commande = date_commande;
+	public void setDateCommande(Date dateCommande) {
+		this.dateCommande = dateCommande;
+	}
+
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
+
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
 	}
 
 	@Override
 	public String toString() {
-		return "Commande [id_commande=" + id_commande + ", statut_commande=" + statut_commande + ", date_commande="
-				+ date_commande + "]";
+		return "Commande [id_commande=" + idCommande + ", statut_commande=" + statutCommande + ", date_commande="
+				+ dateCommande + ", utilisateur=" + utilisateur + "]";
 	}
+
+	
 
 	
 

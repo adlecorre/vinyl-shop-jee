@@ -31,23 +31,21 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 	    ps.setString(1, object.getNom());
 	    ps.setString(2, object.getPrenom());
 	    ps.setString(3, object.getMotDePasse());
+	    ps.setString(5, object.getEmail());
+	    
+	    // Marche seulement pour les updates
+	    if (object.getId() != 0) {
+	        ps.setInt(9, object.getId());
+	    }
+	    
+	    // Attributs optionnels
 
-	    // 4 - date de naissance
 	    if (object.getDateNaissance() != null) {
 	        ps.setDate(4, new java.sql.Date(object.getDateNaissance().getTime()));
 	    } else {
 	        ps.setNull(4, Types.DATE);
 	    }
 
-	    // 5 - email
-	    ps.setString(5, object.getEmail());
-
-	    // Marche seulement pour les updates
-	    if (object.getId() != 0) {
-	        ps.setInt(9, object.getId());
-	    }
-
-	    // Attributs optionnels
 	    if (object.getAdresse() != null && !object.getAdresse().isEmpty()) {
 	        ps.setString(6, object.getAdresse());
 	    } else {

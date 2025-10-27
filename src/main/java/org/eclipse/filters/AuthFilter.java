@@ -1,9 +1,11 @@
 package org.eclipse.filters;
 
+
 import java.io.IOException;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
@@ -25,16 +27,16 @@ public class AuthFilter extends HttpFilter implements Filter {
 		System.out.println("Filter");
 
 		var chemin = req.getServletPath();
-		var personne = req.getSession().getAttribute("utilisateur");
+		var utilisateur = req.getSession().getAttribute("utilisateur");
 		if ((chemin.contains("catalogue") 
 				|| chemin.contains("profil")
-				|| chemin.contains("panier")) && personne == null) {
+				|| chemin.contains("panier")
+				|| chemin.contains("utilisateur")) && utilisateur == null) {
 			res.sendRedirect(req.getContextPath() + "/connexion");
 
 		} else {
 			chain.doFilter(request, response);
 		}
-
 	}
 
 }

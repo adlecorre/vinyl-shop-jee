@@ -20,7 +20,7 @@
               ${sessionScope.utilisateur.prenom} ${sessionScope.utilisateur.nom}
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-              <li><a class="dropdown-item" href="${pageContext.request.contextPath}/annonce">Mes annonces</a></li>
+              <li><a class="dropdown-item" href="${pageContext.request.contextPath}/commandes">Mes commandes</a></li>
               <li><a class="dropdown-item" href="${pageContext.request.contextPath}/favori">Mes favoris</a></li>
               <li><a class="dropdown-item" href="${pageContext.request.contextPath}/profil">Mon profil</a></li>
               <li><hr class="dropdown-divider"></li>
