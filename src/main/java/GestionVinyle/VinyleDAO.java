@@ -3,11 +3,14 @@ package GestionVinyle;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import org.eclipse.config.MySqlConnection;
 
 import GestionUtilisateurs.Role;
 import GestionUtilisateurs.Utilisateur;
@@ -76,29 +79,39 @@ public class VinyleDAO extends DAO<Vinyle>{
 
 	@Override
 	public List<Vinyle> findAll() {
-		List<Vinyle> vinyls = new ArrayList<>();
-		ArtisteDAO artisteDAO = new ArtisteDAO(connection);
-		try {
-			PreparedStatement ps = ConnexionBD.getConnection().prepareStatement("SELECT * FROM Vinyle");
-			ResultSet rs = ps.executeQuery();
-			while(rs.next()) {
-				int id_vinyle = rs.getInt("id_vinyle");
-				String titre = rs.getString("titre");
-				Artiste artiste = artisteDAO.findById(rs.getInt("id_artiste"));
-				String url_pochette = rs.getString("url_pochette");
-				int stock = rs.getInt("stock");
-				double prix = rs.getInt("prix_vinyle");
-				String description = rs.getString("description_vinyle");
-				Vinyle vinyle = new Vinyle(id_vinyle, titre, artiste, url_pochette, stock, prix, description);
-				vinyls.add(vinyle);
-			}
-		} catch (Exception e) {
-			System.out.println("Impossible de récupérer tous les vinyls.");
-			e.printStackTrace();
-		}
-		return vinyls;
+	    List<Vinyle> vinyls = new ArrayList<>();
+	    String sql = "SELECT * FROM vinyle";
+	    ArtisteDAO artisteDAO = new ArtisteDAO(connection);
+
+	    try (Connection connection = MySqlConnection.getConnection();
+	         Statement st = connection.createStatement();
+	         ResultSet rs = st.executeQuery(sql)) {
+
+	        while (rs.next()) {
+	            vinyls.add(mapToVinyle(rs, artisteDAO));
+	        }
+
+	    } catch (SQLException e) {
+	        throw new RuntimeException("Erreur lors de la récupération des vinyles", e);
+	    }
+
+	    return vinyls;
 	}
 
+	private Vinyle mapToVinyle(ResultSet rs, ArtisteDAO artisteDAO) throws SQLException {
+	    Artiste artiste = artisteDAO.findById(rs.getInt("id_artiste"));
+	    return new Vinyle(
+	        rs.getInt("id_vinyle"),
+	        rs.getString("titre"),
+	        artiste,
+	        rs.getString("url_pochette"),
+	        rs.getInt("stock"),
+	        rs.getDouble("prix_vinyle"),
+	        rs.getString("description_vinyle")
+	    );
+	}
+
+	
 	@Override
 	public Vinyle create(Vinyle object) {
 		if (!(object instanceof Vinyle)) throw new IllegalArgumentException("L'objet n'est pas un Vinyle.");
