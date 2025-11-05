@@ -1,9 +1,7 @@
 window.onload = function() {
-  //<editor-fold desc="Changeable Configuration Block">
-
-  // the following lines will be replaced by docker/configurator, when it runs in a docker-container
+  // Configuration Swagger UI
   window.ui = SwaggerUIBundle({
-    url: "https://petstore.swagger.io/v2/swagger.json",
+    url: "/M2iVinyleMaven/api/openapi", // <- ton endpoint OpenApiResource
     dom_id: '#swagger-ui',
     deepLinking: true,
     presets: [
@@ -15,6 +13,4 @@ window.onload = function() {
     ],
     layout: "StandaloneLayout"
   });
-
-  //</editor-fold>
 };
