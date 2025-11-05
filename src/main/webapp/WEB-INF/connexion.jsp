@@ -14,11 +14,11 @@
         <form method="post" action="${pageContext.request.contextPath}/connexion">
             <div class="mb-3">
                 <label for="email" class="form-label">Email :</label>
-                <input type="text" class="form-control" id="email" name="email" value="${param.email}" required>
+                <input type="text" class="form-control" id="email" name="email" value="${param.email}" autocomplete="off" required>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Mot De Passe :</label>
-                <input type="password" class="form-control" id="motDePasse" name="motDePasse" value="${param.nom}" required>
+                <input type="password" class="form-control" id="motDePasse" name="motDePasse" value="${param.nom}" autocomplete="off" required>
             </div>
 
 

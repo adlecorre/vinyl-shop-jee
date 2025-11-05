@@ -28,6 +28,10 @@ public class Vinyle {
 		this.prixVinyle = prixVinyle;
 	}
 
+	public Vinyle() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getIdVinyle() {
 		return idVinyle;
 	}
@@ -98,5 +102,6 @@ public class Vinyle {
 	public int getId() {
 		return this.idVinyle;
 	}
+
 
 }
