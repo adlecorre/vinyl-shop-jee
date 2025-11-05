@@ -22,7 +22,7 @@ public class OpenApiResource {
 	public Response get(@Context Application app) throws Exception{
 		
 		SwaggerConfiguration cfg = new SwaggerConfiguration()
-				.openAPI(new OpenAPI())
+				.openAPI(new OpenAPI().addServersItem(new io.swagger.v3.oas.models.servers.Server().url("/M2iVinyleMaven/api")))
 				.resourcePackages(Set.of("org.eclipse.rest")).prettyPrint(true)
 				.prettyPrint(true);
 		
