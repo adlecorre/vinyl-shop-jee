@@ -3,7 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
 	version="6.0">
-  	<servlet>
+	<servlet>
 		<servlet-name>jakarta-rest</servlet-name>
 		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
 		<init-param>
@@ -21,21 +21,9 @@
 		<servlet-name>jakarta-rest</servlet-name>
 		<url-pattern>/api/*</url-pattern>
 	</servlet-mapping>
-	
-  <display-name>Archetype Created Web Application</display-name>
-  
-  <security-constraint>
-		<web-resource-collection>
-			<web-resource-name>API REST sécurisée</web-resource-name>
-			<!-- on protège toutes les URLs de l'API -->
-			<url-pattern>/api/*</url-pattern>
-		</web-resource-collection>
-		<auth-constraint>
-			<!-- seuls ces rôles pourront entrer -->
-			<role-name>api-user</role-name>
-			<role-name>api-admin</role-name>
-		</auth-constraint>
-	</security-constraint>
+
+	<display-name>Archetype Created Web Application</display-name>
+
 
 	<login-config>
 		<auth-method>BASIC</auth-method>

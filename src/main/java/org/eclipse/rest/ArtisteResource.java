@@ -32,7 +32,6 @@ public class ArtisteResource {
 	ArtisteServices artisteService = new ArtisteServices();
 	
 	@GET
-	@RolesAllowed({"api-admin", "api-user"})
 	@Operation(summary = "Lister les artistes", description = "Retourne la liste des artistes.")
 	@ApiResponses({
 		@ApiResponse(responseCode = "200",
@@ -51,7 +50,6 @@ public class ArtisteResource {
 	
 	
 	@GET
-	@RolesAllowed({"api-admin", "api-user"})
 	@Path("{idArtiste}")
 	@Operation(summary = "Afficher un artiste selon l'ID", description = "Retourne l'artiste demandé")
 	@ApiResponses({
@@ -75,7 +73,6 @@ public class ArtisteResource {
 	}
 	
 	@POST
-	@RolesAllowed({"api-admin"})
 	@Operation(summary = "Créer un artiste", description = "Crée un artiste (nom)")
 	@ApiResponses({
 		@ApiResponse(responseCode = "200",
@@ -95,7 +92,6 @@ public class ArtisteResource {
 	}
 	
 	@PUT
-	@RolesAllowed({"api-admin"})
 	@Path("{idArtiste}")
 	@Operation(summary = "Met à jour un artiste", description = "Met à jour les données de l'artiste grâce à son ID")
 	@ApiResponses({
@@ -119,7 +115,6 @@ public class ArtisteResource {
 	}
 	
 	@DELETE
-	@RolesAllowed({"api-admin"})
 	@Path("{idArtiste}")
 	@Operation(summary = "Supprime un artiste", description = "Supprime un artiste selon l'ID donné")
 	@ApiResponses({

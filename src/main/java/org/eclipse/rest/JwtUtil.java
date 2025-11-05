@@ -11,7 +11,7 @@ import io.jsonwebtoken.security.Keys;
 public class JwtUtil {
 	
 	private static final Key KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-	private static final long EXP_MS = 30 * 60 * 1000; // 30 minutes
+	private static final long EXP_MS = 2 * 30 * 60 * 1000; // 30 minutes
 	
 	public static String generateToken(String username, String role) {
 		long now = System.currentTimeMillis();
