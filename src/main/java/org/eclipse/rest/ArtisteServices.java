@@ -1,14 +1,30 @@
 package org.eclipse.rest;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import org.eclipse.config.MySqlConnection;
 
 import GestionVinyle.Artiste;
+import GestionVinyle.ArtisteDAO;
 import GestionVinyle.Vinyle;
+import GestionVinyle.VinyleDAO;
 
 public class ArtisteServices {
 	
-	public static ArtisteDTO toDto (Artiste a) {
+	private ArtisteDAO artisteDAO;
+	
+	public ArtisteServices() {
+        try {
+            artisteDAO = new ArtisteDAO(MySqlConnection.getConnection());
+        } catch (SQLException e) {
+            throw new RuntimeException("Erreur connexion BDD", e);
+        }
+    }
+	
+	private ArtisteDTO toDto (Artiste a) {
 		ArtisteDTO dto = new ArtisteDTO();
 		dto.setIdArtiste(a.getIdArtiste());
 		dto.setNom(a.getNom());
@@ -17,52 +33,39 @@ public class ArtisteServices {
 	
 	// CREATE
 	public ArtisteDTO create(ArtisteDTO dto) {
-		int newID = DataSource.ARTISTES.size() + 1;
-		Artiste a = new Artiste(newID, dto.getNom());
-		DataSource.ARTISTES.add(a);
+		Artiste a = new Artiste();
+		a.setNom(dto.getNom());
+		artisteDAO.create(a);
 		return toDto(a);
 	}
 	
-	// READ
+	// FIND BY ID
 	public ArtisteDTO findById(int id) {
-		for (Artiste a : DataSource.ARTISTES) {
-			if (a.getIdArtiste() == id) {
-				return toDto(a);
-			}
-		}
-		return null;
+		Artiste a = artisteDAO.findById(id);
+		if (a == null) return null;
+		return toDto(a);
 	}
 	
-	// LIST
+	// LIST ALL
 	public List<ArtisteDTO> findAll(){
-		List<ArtisteDTO> artistes = new ArrayList<ArtisteDTO>();
-		for (Artiste a : DataSource.ARTISTES) {
-			artistes.add(toDto(a));
-		}
-		return artistes;
+		List<Artiste> artistes = artisteDAO.findAll();
+        return artistes.stream().map(this::toDto).collect(Collectors.toList());
 	}
 	
 	// UPDATE
 	public ArtisteDTO update(int id, ArtisteDTO dto) {
-		for (Artiste a : DataSource.ARTISTES) {
-			if(a.getIdArtiste() == id) {
-				a.setNom(dto.getNom());
-				return toDto(a);
-			}
-		}
-		return null;
+		Artiste a = artisteDAO.findById(id);
+		a.setNom(dto.getNom());
+		artisteDAO.update(a);
+		return toDto(a);
 	}
 	
 	// DELETE
 	public boolean delete(int id) {
-		for(int i = 0; i < DataSource.ARTISTES.size(); i++) {
-			Artiste a = DataSource.ARTISTES.get(i);
-			if(a.getIdArtiste() == id) {
-				DataSource.ARTISTES.remove(i);
-				return true;
-			}
-		}
-		return false;
+		Artiste a = artisteDAO.findById(id);
+		if (a == null) return false;
+		if (artisteDAO.delete(a) == null) return false;
+		return true;
 	}
 
 
