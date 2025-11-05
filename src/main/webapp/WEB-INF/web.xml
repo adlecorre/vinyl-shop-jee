@@ -21,5 +21,32 @@
 		<servlet-name>jakarta-rest</servlet-name>
 		<url-pattern>/api/*</url-pattern>
 	</servlet-mapping>
+	
   <display-name>Archetype Created Web Application</display-name>
+  
+  <security-constraint>
+		<web-resource-collection>
+			<web-resource-name>API REST sécurisée</web-resource-name>
+			<!-- on protège toutes les URLs de l'API -->
+			<url-pattern>/api/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<!-- seuls ces rôles pourront entrer -->
+			<role-name>api-user</role-name>
+			<role-name>api-admin</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+	<login-config>
+		<auth-method>BASIC</auth-method>
+		<realm-name>REST-REALM</realm-name>
+	</login-config>
+
+	<!-- déclaration des rôles connus -->
+	<security-role>
+		<role-name>api-user</role-name>
+	</security-role>
+	<security-role>
+		<role-name>api-admin</role-name>
+	</security-role>
 </web-app>

@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -31,6 +32,7 @@ public class ArtisteResource {
 	ArtisteServices artisteService = new ArtisteServices();
 	
 	@GET
+	@RolesAllowed({"api-admin", "api-user"})
 	@Operation(summary = "Lister les artistes", description = "Retourne la liste des artistes.")
 	@ApiResponses({
 		@ApiResponse(responseCode = "200",
@@ -43,13 +45,13 @@ public class ArtisteResource {
 		
 	})
 	
-	//@RolesAllowed({"api-user", "api-admin"})
 	public Response findAll(@Context UriInfo uriInfo) {
 		return Response.ok(artisteService.findAll()).build();
 	}
 	
 	
 	@GET
+	@RolesAllowed({"api-admin", "api-user"})
 	@Path("{idArtiste}")
 	@Operation(summary = "Afficher un artiste selon l'ID", description = "Retourne l'artiste demandé")
 	@ApiResponses({
@@ -73,6 +75,7 @@ public class ArtisteResource {
 	}
 	
 	@POST
+	@RolesAllowed({"api-admin"})
 	@Operation(summary = "Créer un artiste", description = "Crée un artiste (nom)")
 	@ApiResponses({
 		@ApiResponse(responseCode = "200",
@@ -92,6 +95,7 @@ public class ArtisteResource {
 	}
 	
 	@PUT
+	@RolesAllowed({"api-admin"})
 	@Path("{idArtiste}")
 	@Operation(summary = "Met à jour un artiste", description = "Met à jour les données de l'artiste grâce à son ID")
 	@ApiResponses({
@@ -115,6 +119,7 @@ public class ArtisteResource {
 	}
 	
 	@DELETE
+	@RolesAllowed({"api-admin"})
 	@Path("{idArtiste}")
 	@Operation(summary = "Supprime un artiste", description = "Supprime un artiste selon l'ID donné")
 	@ApiResponses({
