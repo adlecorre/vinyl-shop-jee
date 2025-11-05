@@ -53,7 +53,7 @@ public class VinyleResource {
 	}
 	
 	@GET
-	@Path("{id}")
+	@Path("{idVinyle}")
 	@Operation(summary = "Afficher un vinyle selon l'ID", description = "Retourne le vinyle demandé")
 	@ApiResponses({
 		@ApiResponse(responseCode = "200",
@@ -65,7 +65,7 @@ public class VinyleResource {
 					 content = @Content(schema = @Schema(implementation = ErrorDTO.class)))
 		
 	})
-	public Response findById(@PathParam("id") int id, @Context UriInfo uriInfo) {
+	public Response findById(@PathParam("idVinyle") int id, @Context UriInfo uriInfo) {
 		VinyleDTO dto = vinyleServices.findBy(id);
 		if(dto == null) {
 			return Response.status(Status.NOT_FOUND)
@@ -107,8 +107,8 @@ public class VinyleResource {
 		
 	})
 	@PUT
-	@Path("{id}")
-	public Response update(@PathParam("id") int id, VinyleDTO dto, @Context UriInfo uriInfo) {
+	@Path("{idVinyle}")
+	public Response update(@PathParam("idVinyle") int id, VinyleDTO dto, @Context UriInfo uriInfo) {
 		VinyleDTO updated = vinyleServices.update(id, dto);
 		if(updated == null) {
 			return Response.status(Status.NOT_FOUND)
@@ -130,8 +130,8 @@ public class VinyleResource {
 		
 	})
 	@DELETE
-	@Path("{id}")
-	public Response delete(@PathParam("id") int id) {
+	@Path("{idVinyle}")
+	public Response delete(@PathParam("idVinyle") int id) {
 		boolean deleted = vinyleServices.delete(id);
 		if (deleted) return Response.ok().build();
 		return Response.noContent().build(); // erreur 204

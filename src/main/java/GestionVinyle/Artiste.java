@@ -14,6 +14,9 @@ public class Artiste {
 		this.nom = nom;
 	}
 
+	public Artiste() {
+	}
+
 	public int getIdArtiste() {
 		return idArtiste;
 	}

@@ -5,7 +5,6 @@ public class ArtisteDTO {
 	private String nom;
 	
 	public ArtisteDTO() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public ArtisteDTO(int idArtiste, String nom) {
