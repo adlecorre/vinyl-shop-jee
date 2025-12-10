@@ -1,4 +1,4 @@
-# 🎵 M2i Vinyle Maven
+# 🎵 Vinyle Shop Maven
 
 Application web Java EE de gestion et vente de vinyles avec API REST sécurisée.
 
